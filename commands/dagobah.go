@@ -26,12 +26,12 @@ and provides it's own webserver.`,
 }
 
 func rootRun(cmd *cobra.Command, args []string) {
-	initConfig()
 	fmt.Println(viper.Get("feeds"))
 	fmt.Println(viper.GetString("appname"))
 }
 
 func init() {
+	cobra.InitializeConfig = initConfig
 	RootCmd.PersistentFlags().StringVar(&CfgFile, "config", "", "config file (default is $HOME/dagobah/config.yaml)")
 }
 
