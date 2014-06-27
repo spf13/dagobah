@@ -46,11 +46,6 @@ func initConfig() {
 
 	viper.SetDefault("feeds", []map[string]string{{"Name": "Hacking Management", "Url": "url:http://spf13.com/index.xml"}})
 	viper.SetDefault("port", 1138)
-	viper.SetDefault("RSSTimeout", 5)
-
-	if fetchCmd.Flags().Lookup("rsstimeout").Changed {
-		viper.Set("RSSTimeout", RSSTimeout)
-	}
 }
 
 func addCommands() {

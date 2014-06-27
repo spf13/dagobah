@@ -15,12 +15,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-var RSSTimeout int
-
 var fetchCmd = &cobra.Command{
 	Use:   "fetch",
 	Short: "Fetch feeds",
 	Long:  `Dagobah will fetch all feeds listed in the config file.`,
+	Run:   fetchRun,
 }
 
 type ConfigFeed struct {
@@ -33,12 +32,11 @@ type Config struct {
 }
 
 func init() {
-	fetchCmd.Flags().IntVar(&RSSTimeout, "rsstimeout", 5, "Timeout (in min) for RSS retrival")
-	fetchCmd.Run = fetchRun
+	fetchCmd.Flags().Int("rsstimeout", 5, "Timeout (in min) for RSS retrival")
+	viper.BindPFlag("rsstimeout", fetchCmd.Flags().Lookup("rsstimeout"))
 }
 
 func fetchRun(cmd *cobra.Command, args []string) {
-	initConfig()
 	Fetcher()
 }
 
