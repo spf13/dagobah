@@ -39,62 +39,12 @@
             </div>
         </section>
             <section id="latest-list" class="ui divided inbox selection list active tab" data-tab="recent">
+                {{ range $item := .posts }}
                 <a class="item">
-                    <div class="description">"Bring Your Velociraptor To Work" Day Ends In Tragedy</div>
-                    <div class="right floated ui label small">Sep 14, 2013</div>
+                    <div class="description">{{ $item.Title }}</div>
+                    <div class="right floated ui label small">{{ $item.Date.Format "Jan 2, 2006" }}</div>
                 </a>
-                <a class="item">
-                    <div class="description">55 Ways BuzzFeed is Using Kitten Photos to Destroy the World</div>
-                    <div class="right floated ui label small">Sep 14, 2013</div>
-                </a>
-                <a class="item active">
-                    <div class="description">25 Things Everyone always do every day</div>
-                    <div class="right floated ui label small">Sep 10, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">10 Ways Different celebrities eat ice cream</div>
-                    <div class="right floated ui label small">Sep 09, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">63 Muppets with Human Hands Swearing in Sign-Language</div>
-                    <div class="right floated ui label small">Sep 07, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">78 Photos That Have Absolutely Nothing to Do with This Story</div>
-                    <span class="floated right ui label small">Sep 05, 2013</span>
-                </a>
-                <a class="item">
-                    <div class="description">99 Seasonal Disorders That Make Excellent Names for Lipstick Colors</div>
-                    <div class="right floated ui label small">Sep 14, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">63 Really Obvious Things We’ve Conveniently Listed in a Convenient List</div>
-                    <div class="right floated ui label small">Sep 14, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">Incredibly Moving Stories About Cats Told By a Pit Bull Hand Puppet</div>
-                    <div class="right floated ui label small">Sep 10, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">21 Cooking Tips That Will Kill Us All</div>
-                    <div class="right floated ui label small">Sep 09, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">UPDATED: There Are No Vampires at the Denver International Airport</div>
-                    <div class="right floated ui label small">Sep 07, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">What It’s Like to Be Forked</div>
-                    <span class="floated right ui label small">Sep 05, 2013</span>
-                </a>
-                <a class="item">
-                    <div class="description">NASA Is Testing New Menu Items – and You Are Looking Delicious</div>
-                    <div class="right floated ui label small">Sep 14, 2013</div>
-                </a>
-                <a class="item">
-                    <div class="description">Why I'm Switching Back to Earth</div>
-                    <div class="right floated ui label small">Sep 14, 2013</div>
-                </a>
+                {{ end }}
             </section>
             <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
                 <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">

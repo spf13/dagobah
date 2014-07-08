@@ -11,6 +11,8 @@ import (
 	"log"
 	"net/http"
 
+	"labix.org/v2/mgo/bson"
+
 	"github.com/GeertJohan/go.rice"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
@@ -84,6 +86,10 @@ func loadTemplates(list ...string) *template.Template {
 }
 
 func homeRoute(c *gin.Context) {
-	obj := gin.H{"title": "Go Rules"}
+	var posts []Itm
+	results := Items().Find(bson.M{}).Sort("-date").Limit(20)
+	results.All(&posts)
+
+	obj := gin.H{"title": "Go Rules", "posts": posts}
 	c.HTML(200, "home.html", obj)
 }
