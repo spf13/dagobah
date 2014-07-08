@@ -199,3 +199,25 @@ func chnlify(o *rss.Channel) Chnl {
 
 	return x
 }
+
+func (i Itm) FirstLink() (link rss.Link) {
+	if len(i.Links) == 0 || i.Links[0] == nil {
+		return
+	}
+	return *i.Links[0]
+}
+
+func (i Itm) TrueContent() string {
+	if i.Content != nil && i.Content.Text != "" {
+		return i.Content.Text
+	} else {
+		return i.Description
+	}
+}
+
+func (i Itm) WorthShowing() bool {
+	if len(i.TrueContent()) > 100 {
+		return true
+	}
+	return false
+}

@@ -7,9 +7,11 @@ package commands
 
 import (
 	"fmt"
+	"html"
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 
 	"labix.org/v2/mgo/bson"
 
@@ -82,7 +84,21 @@ func loadTemplates(list ...string) *template.Template {
 		}
 	}
 
+	funcMap := template.FuncMap{
+		"html":  ProperHtml,
+		"title": func(a string) string { return strings.Title(a) },
+	}
+
+	templates.Funcs(funcMap)
+
 	return templates
+}
+
+func ProperHtml(text string) template.HTML {
+	if strings.Contains(text, "content:encoded>") || strings.Contains(text, "content/:encoded>") {
+		text = html.UnescapeString(text)
+	}
+	return template.HTML(html.UnescapeString(template.HTMLEscapeString(text)))
 }
 
 func homeRoute(c *gin.Context) {

@@ -122,7 +122,8 @@ body {
 }
 
 main {
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding: 2rem;
     background: #fafafa;
     position: absolute;
@@ -163,10 +164,17 @@ color: rgba(0, 0, 0, 0.7);
     border-radius:0 !important;
 }
 
-.item > a {
+#sidebar  a {
     text-decoration: none;
 }
 
 .item:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    max-height: 80%;
 }
