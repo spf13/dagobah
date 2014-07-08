@@ -56,11 +56,11 @@ func initConfig() {
 	viper.ReadInConfig()
 
 	viper.SetDefault("feeds", []map[string]string{{"Name": "Hacking Management", "Url": "url:http://spf13.com/index.xml"}})
-	//viper.SetDefault("port", 1138)
 }
 
 func addCommands() {
 	RootCmd.AddCommand(fetchCmd)
+	RootCmd.AddCommand(serverCmd)
 }
 
 func Execute() {
