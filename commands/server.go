@@ -6,8 +6,10 @@
 package commands
 
 import (
+	"fmt"
 	"html/template"
 	"log"
+	"net/http"
 
 	"github.com/GeertJohan/go.rice"
 	"github.com/gin-gonic/gin"
@@ -38,9 +40,21 @@ func serverRun(cmd *cobra.Command, args []string) {
 	r.HTMLTemplates = templates
 
 	r.GET("/", homeRoute)
+
+	static, err := rice.FindBox("static")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	r.GET("/static/*filepath", func(c *gin.Context) {
+		original := c.Req.URL.Path
+		c.Req.URL.Path = c.Params.ByName("filepath")
+		fmt.Println(c.Params.ByName("filepath"))
+		http.FileServer(static.HTTPBox()).ServeHTTP(c.Writer, c.Req)
+		c.Req.URL.Path = original
+	})
 	//r.GET("/feed/:key", feedRoute)
 	//r.GET("/post/:key", postRoute)
-
 	port := viper.GetString("port")
 	r.Run(":" + port)
 }

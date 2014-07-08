@@ -1,0 +1,172 @@
+/*******************************
+            Global
+*******************************/
+
+html,
+body {
+  font-size: 15px;
+  height: 100%;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #FFFFFF;
+  margin: 0px;
+  padding: 0px;
+  color: #555555;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+}
+
+.ui.header {
+  font-family: 'Source Sans Pro', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+/*******************************
+            Global
+*******************************/
+
+/*-------------------
+        Grid
+--------------------*/
+
+#feed .grid {
+  height: 100%;
+}
+
+#feed > .grid > .column {
+  height: 100%;
+}
+
+/*-------------------
+       Inbox
+--------------------*/
+
+#feed .inbox.tab {
+  background-color: #FFFFFF;
+}
+
+#feed .inbox.tab .item {
+  padding-top: 1rem;
+  padding-bottom: 0.4rem;
+  background: white;
+}
+
+#feed .inbox.tab .item .description {
+  margin-left: 1em;
+  padding-bottom: 0.5rem;
+}
+
+#feed .inbox.tab .item.active {
+    background-color: #fafafa;
+}
+
+#feed .page {
+  float: right;
+  margin-top: 0.9em;
+}
+
+#feed .middle.column {
+  padding: 1em 0em;
+}
+
+#feed .middle.column h2 {
+  margin-top: 0em;
+}
+/*rtl:ignore*/
+#feed .right.column {
+  padding: 1em 2em;
+  background-color: #FAFAFA;
+}
+
+/*******************************
+          Responsive
+*******************************/
+
+@media only screen and (max-width : 1000px) {
+  #feed .inbox .date {
+    float: none;
+    margin-bottom: 0.5em;
+  }
+}
+
+@media only screen and (max-width : 1250px) {
+  /*rtl:ignore*/
+  #feed .left.column > .menu .item {
+    font-size: 1rem;
+  }
+}
+
+
+#search {
+ width: 2px;
+ -moz-transition: width 0.5s ease-out;
+ -webkit-transition: width 0.5s ease-out;
+ transition: width 0.5s ease-out;
+}
+#search:focus {
+ width: 8em;
+ -moz-transition: width 0.5s ease-out;
+ -webkit-transition: width 0.5s ease-out;
+ transition: width 0.5s ease-out;
+}
+
+#sidebar {
+    background-color:white;
+    width: 325px;
+    position: absolute;
+    top: 0;
+    left:0;
+    bottom:0;
+    overflow:hidden;
+}
+
+main {
+    overflow: auto;
+    padding: 2rem;
+    background: #fafafa;
+    position: absolute;
+    left: 325px;
+    top:0;
+    bottom:0;
+    right:0;
+}
+
+#channel-list {
+    width: 100%;
+}
+
+#latest-list, #channel-list {
+    overflow-y:scroll;
+    height:100%;
+}
+
+#menu-tabs {
+    margin-bottom: -1rem;
+}
+
+#sidebar > header {
+    padding: 1rem 1rem 0 1rem;
+}
+
+main > article > header .meta-tags > .date,  main > article > header .meta-tags > .author {
+    margin-right: 1rem;
+}
+.ui.selection.list .item:hover {
+/*background-color: rgba(0, 0, 0, 0.08) !important;*/
+/*background-color: beige !important;*/
+background-color: rgba(245, 245, 220, 0.6) !important;
+color: rgba(0, 0, 0, 0.7);
+}
+
+.ui.menu {
+    border-radius:0 !important;
+}
+
+.item > a {
+    text-decoration: none;
+}
+
+.item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
