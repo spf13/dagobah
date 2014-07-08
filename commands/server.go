@@ -30,33 +30,33 @@ func init() {
 }
 
 func serverRun(cmd *cobra.Command, args []string) {
+	port := viper.GetString("port")
+
 	r := gin.Default()
+	templates := loadTemplates("home.html")
+	r.HTMLTemplates = templates
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
 
-	templates := loadTemplates("home.html")
-	r.HTMLTemplates = templates
-
 	r.GET("/", homeRoute)
+	r.GET("/static/*filepath", staticServe)
+	//r.GET("/feed/:key", feedRoute)
+	//r.GET("/post/:key", postRoute)
+	r.Run(":" + port)
+}
 
+func staticServe(c *gin.Context) {
 	static, err := rice.FindBox("static")
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	r.GET("/static/*filepath", func(c *gin.Context) {
-		original := c.Req.URL.Path
-		c.Req.URL.Path = c.Params.ByName("filepath")
-		fmt.Println(c.Params.ByName("filepath"))
-		http.FileServer(static.HTTPBox()).ServeHTTP(c.Writer, c.Req)
-		c.Req.URL.Path = original
-	})
-	//r.GET("/feed/:key", feedRoute)
-	//r.GET("/post/:key", postRoute)
-	port := viper.GetString("port")
-	r.Run(":" + port)
+	original := c.Req.URL.Path
+	c.Req.URL.Path = c.Params.ByName("filepath")
+	fmt.Println(c.Params.ByName("filepath"))
+	http.FileServer(static.HTTPBox()).ServeHTTP(c.Writer, c.Req)
+	c.Req.URL.Path = original
 }
 
 func loadTemplates(list ...string) *template.Template {
