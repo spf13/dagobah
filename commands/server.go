@@ -6,6 +6,10 @@
 package commands
 
 import (
+	"html/template"
+	"log"
+
+	"github.com/GeertJohan/go.rice"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -18,6 +22,11 @@ var serverCmd = &cobra.Command{
 	Run:   serverRun,
 }
 
+func init() {
+	serverCmd.Flags().Int("port", 1138, "Port to run Dagobah server on")
+	viper.BindPFlag("port", serverCmd.Flags().Lookup("port"))
+}
+
 func serverRun(cmd *cobra.Command, args []string) {
 	r := gin.Default()
 
@@ -25,11 +34,42 @@ func serverRun(cmd *cobra.Command, args []string) {
 		c.String(200, "pong")
 	})
 
+	templates := loadTemplates("home.html")
+	r.HTMLTemplates = templates
+
+	r.GET("/", homeRoute)
+	//r.GET("/feed/:key", feedRoute)
+	//r.GET("/post/:key", postRoute)
+
 	port := viper.GetString("port")
 	r.Run(":" + port)
 }
 
-func init() {
-	serverCmd.Flags().Int("port", 1138, "Port to run Dagobah server on")
-	viper.BindPFlag("port", serverCmd.Flags().Lookup("port"))
+func loadTemplates(list ...string) *template.Template {
+	templateBox, err := rice.FindBox("templates")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	templates := template.New("")
+
+	for _, x := range list {
+		templateString, err := templateBox.String(x)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// get file contents as string
+		_, err = templates.New(x).Parse(templateString)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	return templates
+}
+
+func homeRoute(c *gin.Context) {
+	obj := gin.H{"title": "Go Rules"}
+	c.HTML(200, "home.html", obj)
 }

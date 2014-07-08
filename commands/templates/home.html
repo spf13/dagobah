@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Standard Meta -->
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<!-- Site Properities -->
+<title>{{.title}}</title>
+
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="/css/semantic.css">
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.js"></script>
+<script src="/javascript/semantic.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/css/feed.css">
+<script src="/javascript/feed.js"></script>
+</head>
+<body id="feed">
+    <nav id="sidebar">
+        <header>
+            <h2 class="ui header">
+                <i class="globe icon"></i> Dagobah
+            </h2>
+        </header>
+        <section id="menu-tabs" class="ui green inverted pointing filter menu small" >
+            <a class="active item" data-tab="recent"><i class="time icon"></i>Latest</a>
+            <a class="item" data-tab="channels"> <i class="users icon"></i>Channels</a>
+            <div class="right menu">
+                <div class="item">
+                    <div class="ui icon input">
+                        <input type="text" id="search" placeholder="Search...">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+            <section id="latest-list" class="ui divided inbox selection list active tab" data-tab="recent">
+                <a class="item">
+                    <div class="description">"Bring Your Velociraptor To Work" Day Ends In Tragedy</div>
+                    <div class="right floated ui label small">Sep 14, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">55 Ways BuzzFeed is Using Kitten Photos to Destroy the World</div>
+                    <div class="right floated ui label small">Sep 14, 2013</div>
+                </a>
+                <a class="item active">
+                    <div class="description">25 Things Everyone always do every day</div>
+                    <div class="right floated ui label small">Sep 10, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">10 Ways Different celebrities eat ice cream</div>
+                    <div class="right floated ui label small">Sep 09, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">63 Muppets with Human Hands Swearing in Sign-Language</div>
+                    <div class="right floated ui label small">Sep 07, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">78 Photos That Have Absolutely Nothing to Do with This Story</div>
+                    <span class="floated right ui label small">Sep 05, 2013</span>
+                </a>
+                <a class="item">
+                    <div class="description">99 Seasonal Disorders That Make Excellent Names for Lipstick Colors</div>
+                    <div class="right floated ui label small">Sep 14, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">63 Really Obvious Things We’ve Conveniently Listed in a Convenient List</div>
+                    <div class="right floated ui label small">Sep 14, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">Incredibly Moving Stories About Cats Told By a Pit Bull Hand Puppet</div>
+                    <div class="right floated ui label small">Sep 10, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">21 Cooking Tips That Will Kill Us All</div>
+                    <div class="right floated ui label small">Sep 09, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">UPDATED: There Are No Vampires at the Denver International Airport</div>
+                    <div class="right floated ui label small">Sep 07, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">What It’s Like to Be Forked</div>
+                    <span class="floated right ui label small">Sep 05, 2013</span>
+                </a>
+                <a class="item">
+                    <div class="description">NASA Is Testing New Menu Items – and You Are Looking Delicious</div>
+                    <div class="right floated ui label small">Sep 14, 2013</div>
+                </a>
+                <a class="item">
+                    <div class="description">Why I'm Switching Back to Earth</div>
+                    <div class="right floated ui label small">Sep 14, 2013</div>
+                </a>
+            </section>
+            <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
+                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
+                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
+                    <a class="ui name" href=""> Hacking Management </a>
+                    <span class="ui label">13</span>
+                </div>
+                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
+                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
+                    <a class="ui name" href=""> Going Go </a>
+                    <span class="ui label">11</span>
+                </div>
+                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
+                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
+                    <a class="ui name" href=""> Hacking Management </a>
+                    <span class="ui label">13</span>
+                </div>
+                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
+                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
+                    <a class="ui name" href=""> Going Go </a>
+                    <span class="ui label">11</span>
+                </div>
+                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
+                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
+                    <a class="ui name" href=""> Hacking Management </a>
+                    <span class="ui label">13</span>
+                </div>
+                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
+                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
+                    <a class="ui name" href=""> Going Go </a>
+                    <span class="ui label">11</span>
+                </div>
+            </section>
+    </nav>
+    <main>
+    <article>
+        <header>
+            <h1 class="ui header">"Bring Your Velociraptor To Work" Day Ends In Tragedy</h1>
+            <section class="meta-tags">
+                <a class="ui label large blue author">Hacking Management</a>
+                <span class="large ui label date">Sep 10, 2013</span>
+                <span class="ui green small label">Go</span> <span class="ui green small label">Comics</span>
+            </section>
+        </header>
+        <section class="main-content">
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <p> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? </p>
+            <p> At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. </p>
+        </section>
+        <footer>
+        <div class="ui basic button">Source</div>
+        <div class="ui divider"></div>
+        </footer>
+    </article>
+    <article>
+        <header>
+            <h1 class="ui header">55 Ways BuzzFeed is Using Kitten Photos to Destroy the World</h1>
+            <section class="meta-tags">
+                <a class="ui label author large blue">Hacking Management</a> 
+                <span class="large ui label date">Sep 10, 2013</span>
+                <span class="ui green small label">Go</span> <span class="ui green small label">Comics</span>
+            </section>
+        </header>
+        <section class="main-content">
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <p> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? </p>
+            <p> At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. </p>
+        </section>
+        <footer>
+        <div class="ui basic button">Source</div>
+        <div class="ui divider"></div>
+        </footer>
+    </article>
+    </main>
+</body>
+</html>
