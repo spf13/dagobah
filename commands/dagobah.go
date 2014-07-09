@@ -54,7 +54,7 @@ func initConfig() {
 	viper.AddConfigPath("$HOME/.dagobah/") // call multiple times to add many search paths
 	viper.ReadInConfig()
 
-	viper.SetDefault("feeds", []map[string]string{{"Name": "Hacking Management", "Url": "url:http://spf13.com/index.xml"}})
+	viper.SetDefault("feeds", []map[string]string{{"Name": "Hacking Management", "Url": "http://spf13.com/index.xml"}})
 }
 
 func addCommands() {
