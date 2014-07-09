@@ -8,7 +8,6 @@ package commands
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -71,5 +70,5 @@ func Execute() {
 		os.Exit(-1)
 	}
 
-	time.Sleep(1 * time.Hour)
+	select {}
 }
