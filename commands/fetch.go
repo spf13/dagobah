@@ -7,6 +7,8 @@ package commands
 
 import (
 	"fmt"
+	"log"
+	"net/url"
 	"os"
 	"time"
 
@@ -220,4 +222,16 @@ func (i Itm) WorthShowing() bool {
 		return true
 	}
 	return false
+}
+
+func (c Chnl) HomePage() string {
+	if len(c.Links) == 0 {
+		return ""
+	}
+
+	url, err := url.Parse(c.Links[0].Href)
+	if err != nil {
+		log.Println(err)
+	}
+	return url.Scheme + "://" + url.Host
 }

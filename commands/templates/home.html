@@ -49,36 +49,13 @@
                 {{ end }}
             </section>
             <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
-                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
-                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
-                    <a class="ui name" href=""> Hacking Management </a>
-                    <span class="ui label">13</span>
+                {{ range $channel := .channels }}
+                <div class="item" onclick="location.href='{{$channel.HomePage}}';" style="cursor:pointer;">
+                    <a href="{{$channel.HomePage}}" class="ui float right"><i class="external url sign icon"></i></a>
+                    <a class="ui name" href=""> {{$channel.Title}} </a>
+                    <span class="ui label">{{ len $channel.Links }}</span>
                 </div>
-                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
-                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
-                    <a class="ui name" href=""> Going Go </a>
-                    <span class="ui label">11</span>
-                </div>
-                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
-                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
-                    <a class="ui name" href=""> Hacking Management </a>
-                    <span class="ui label">13</span>
-                </div>
-                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
-                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
-                    <a class="ui name" href=""> Going Go </a>
-                    <span class="ui label">11</span>
-                </div>
-                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
-                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
-                    <a class="ui name" href=""> Hacking Management </a>
-                    <span class="ui label">13</span>
-                </div>
-                <div class="item" onclick="location.href='http://www.example.com';" style="cursor:pointer;">
-                    <a href="" class="ui float right"><i class="external url sign icon"></i></a>
-                    <a class="ui name" href=""> Going Go </a>
-                    <span class="ui label">11</span>
-                </div>
+                {{end}}
             </section>
     </nav>
     <main>

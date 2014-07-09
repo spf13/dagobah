@@ -106,6 +106,10 @@ func homeRoute(c *gin.Context) {
 	results := Items().Find(bson.M{}).Sort("-date").Limit(20)
 	results.All(&posts)
 
-	obj := gin.H{"title": "Go Rules", "posts": posts}
+	var channels []Chnl
+	results2 := Channels().Find(bson.M{}).Sort("-lastbuilddate")
+	results2.All(&channels)
+
+	obj := gin.H{"title": "Go Rules", "posts": posts, "channels": channels}
 	c.HTML(200, "home.html", obj)
 }
