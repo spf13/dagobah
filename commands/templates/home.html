@@ -50,9 +50,9 @@
             </section>
             <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
                 {{ range $channel := .channels }}
-                <div class="item" onclick="location.href='{{$channel.HomePage}}';" style="cursor:pointer;">
+                <div class="item" link="/channel/{{$channel.Key}}" style="cursor:pointer;">
                     <a href="{{$channel.HomePage}}" class="ui float right"><i class="external url sign icon"></i></a>
-                    <a class="ui name" href=""> {{$channel.Title}} </a>
+                    <span class="ui name" href=""> {{$channel.Title}} </span>
                     <span class="ui label">{{ len $channel.Links }}</span>
                 </div>
                 {{end}}

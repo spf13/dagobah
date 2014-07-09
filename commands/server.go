@@ -46,8 +46,7 @@ func serverRun(cmd *cobra.Command, args []string) {
 
 	r.GET("/", homeRoute)
 	r.GET("/static/*filepath", staticServe)
-	//r.GET("/feed/:key", feedRoute)
-	//r.GET("/post/:key", postRoute)
+	r.GET("/channel/:key", channelRoute)
 	r.Run(":" + port)
 }
 
@@ -104,6 +103,24 @@ func ProperHtml(text string) template.HTML {
 func homeRoute(c *gin.Context) {
 	var posts []Itm
 	results := Items().Find(bson.M{}).Sort("-date").Limit(20)
+	results.All(&posts)
+
+	var channels []Chnl
+	results2 := Channels().Find(bson.M{}).Sort("-lastbuilddate")
+	results2.All(&channels)
+
+	obj := gin.H{"title": "Go Rules", "posts": posts, "channels": channels}
+	c.HTML(200, "home.html", obj)
+}
+
+func channelRoute(c *gin.Context) {
+	key := c.Params.ByName("key")
+	if len(key) < 2 {
+		c.String(404, "Invalid Channel")
+	}
+
+	var posts []Itm
+	results := Items().Find(bson.M{"channelkey": key}).Sort("-date").Limit(20)
 	results.All(&posts)
 
 	var channels []Chnl
