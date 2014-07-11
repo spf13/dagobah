@@ -1,4 +1,9 @@
-    {{ range $item := .posts }}
+{{ with .message}}
+<h1 class="ui header large"> {{.}} </h1>
+{{ end }}
+
+{{ with .posts }}
+    {{ range $item := . }}
     {{ if $item.WorthShowing }}
         <article>
             <header>
@@ -22,3 +27,6 @@
         </article>
     {{ end }}
     {{ end }}
+{{ else }}
+    No Articles
+{{ end }}

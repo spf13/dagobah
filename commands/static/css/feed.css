@@ -150,6 +150,10 @@ main {
     padding: 1rem 1rem 0 1rem;
 }
 
+#header {
+    margin: 1rem 0 -1rem 0;
+}
+
 main > article > header .meta-tags > .date,  main > article > header .meta-tags > .author {
     margin-right: 1rem;
 }

@@ -26,13 +26,15 @@
 <body id="feed">
     <nav id="sidebar">
         <header>
+            <a href="/">
             <h2 class="ui header">
                 <img class="ui medium image" src="/static/images/logo.png">
             </h2>
+            </a>
         </header>
         <section id="menu-tabs" class="ui green inverted pointing filter menu small" >
-            <a class="active item" data-tab="recent"><i class="time icon"></i>Latest</a>
-            <a class="item" data-tab="channels"> <i class="users icon"></i>Channels</a>
+            <a class="active item" data-tab="recent"><i class="circular inbox icon"></i>Items</a>
+            <a class="item" data-tab="channels"> <i class="circular list layout icon"></i>Channels</a>
             <div class="right menu">
                 <div class="item">
                     <div class="ui icon input">
@@ -42,6 +44,9 @@
                 </div>
             </div>
         </section>
+           {{ with .header }}
+               <h4 class="ui inverted black block header" id="header"> {{.}} </h4>
+           {{ end }}
             <section id="latest-list" class="ui divided inbox selection list active tab" data-tab="recent">
                 {{ template "items.html" . }}
             </section>
