@@ -30,7 +30,10 @@ func rootRun(cmd *cobra.Command, args []string) {
 }
 
 func init() {
-	cobra.InitializeConfig = initConfig
+	cobra.OnInitialize(initConfig)
+
+	viper.SetDefault("feeds", []map[string]string{{"Name": "Hacking Management", "Url": "http://spf13.com/index.xml"}})
+
 	RootCmd.PersistentFlags().StringVar(&CfgFile, "config", "", "config file (default is $HOME/dagobah/config.yaml)")
 	RootCmd.PersistentFlags().StringP("dbname", "d", "dagobah", "name of the database")
 	RootCmd.PersistentFlags().Int("dbport", 27017, "port to access mongoDB")
@@ -53,8 +56,6 @@ func initConfig() {
 	viper.AddConfigPath("/etc/dagobah/")   // path to look for the config file in
 	viper.AddConfigPath("$HOME/.dagobah/") // call multiple times to add many search paths
 	viper.ReadInConfig()
-
-	viper.SetDefault("feeds", []map[string]string{{"Name": "Hacking Management", "Url": "http://spf13.com/index.xml"}})
 }
 
 func addCommands() {
