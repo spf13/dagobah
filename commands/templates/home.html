@@ -39,51 +39,14 @@
             </div>
         </section>
             <section id="latest-list" class="ui divided inbox selection list active tab" data-tab="recent">
-                {{ range $item := .posts }}
-                {{ if $item.WorthShowing }}
-                <a class="item" href="#{{$item.Key}}">
-                    <div class="description">{{ $item.Title }}</div>
-                    <div class="right floated ui label small">{{ $item.Date.Format "Jan 2, 2006" }}</div>
-                </a>
-                {{ end }}
-                {{ end }}
+                {{ template "items.html" . }}
             </section>
             <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
-                {{ range $channel := .channels }}
-                <div class="item" link="/channel/{{$channel.Key}}" style="cursor:pointer;">
-                    <a href="{{$channel.HomePage}}" class="ui float right"><i class="external url sign icon"></i></a>
-                    <span class="ui name" href=""> {{$channel.Title}} </span>
-                    <span class="ui label">{{ len $channel.Links }}</span>
-                </div>
-                {{end}}
+                {{ template "channels.html" . }}
             </section>
     </nav>
     <main>
-
-    {{ range $item := .posts }}
-    {{ if $item.WorthShowing }}
-        <article>
-            <header>
-                <a name="{{$item.Key}}">
-                <h1 class="ui header">{{$item.Title}}</h1>
-                <section class="meta-tags">
-                    <a class="ui label large blue author">{{$item.Author.Name}}</a>
-                    <span class="large ui label date">{{ $item.Date.Format "Jan 2, 2006" }}</span>
-                    <!--<span class="ui green small label">Go</span> <span class="ui green small label">Comics</span>-->
-                </section>
-            </header>
-            <section class="main-content">
-                {{$item.TrueContent | html }}
-            </section>
-            <footer>
-                {{with $item.FirstLink}}
-                <a class="ui basic button" href="{{.Href}}">Source</a>
-                {{end}}
-            <div class="ui divider"></div>
-            </footer>
-        </article>
-    {{ end }}
-    {{ end }}
+     {{ template "main.html" . }}
     </main>
 </body>
 </html>

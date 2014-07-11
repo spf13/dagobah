@@ -1,0 +1,11 @@
+                <div class="item" link="/" style="cursor:pointer;">
+                    <i class="external home icon"></i>
+                    <span class="ui name" href=""> All </span>
+                </div>
+                {{ range $channel := .channels }}
+                <div class="item" link="/channel/{{$channel.Key}}" style="cursor:pointer;">
+                    <a href="{{$channel.HomePage}}" class="ui float right"><i class="external url sign icon"></i></a>
+                    <span class="ui name" href=""> {{$channel.Title}} </span>
+                    <span class="ui label">{{ len $channel.Links }}</span>
+                </div>
+                {{end}}

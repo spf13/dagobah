@@ -1,0 +1,24 @@
+    {{ range $item := .posts }}
+    {{ if $item.WorthShowing }}
+        <article>
+            <header>
+                <a name="{{$item.Key}}">
+                <h1 class="ui header">{{$item.Title}}</h1>
+                <section class="meta-tags">
+                    <a class="ui label large blue author">{{$item.Author.Name}}</a>
+                    <span class="large ui label date">{{ $item.Date.Format "Jan 2, 2006" }}</span>
+                    <!--<span class="ui green small label">Go</span> <span class="ui green small label">Comics</span>-->
+                </section>
+            </header>
+            <section class="main-content">
+                {{$item.TrueContent | html }}
+            </section>
+            <footer>
+                {{with $item.FirstLink}}
+                <a class="ui basic button" href="{{.Href}}">Source</a>
+                {{end}}
+            <div class="ui divider"></div>
+            </footer>
+        </article>
+    {{ end }}
+    {{ end }}

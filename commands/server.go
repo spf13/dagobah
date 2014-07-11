@@ -37,7 +37,7 @@ func serverRun(cmd *cobra.Command, args []string) {
 	port := viper.GetString("port")
 
 	r := gin.Default()
-	templates := loadTemplates("home.html")
+	templates := loadTemplates("home.html", "channels.html", "items.html", "main.html")
 	r.HTMLTemplates = templates
 
 	r.GET("/ping", func(c *gin.Context) {
