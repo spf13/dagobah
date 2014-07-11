@@ -11,6 +11,7 @@ import (
 
 	"github.com/spf13/viper"
 	"labix.org/v2/mgo"
+	"labix.org/v2/mgo/bson"
 )
 
 var mongodbSession *mgo.Session
@@ -78,4 +79,11 @@ func CreateUniqueIndexes() {
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+func AllChannels() []Chnl {
+	var channels []Chnl
+	results2 := Channels().Find(bson.M{}).Sort("-lastbuilddate")
+	results2.All(&channels)
+	return channels
 }

@@ -17,9 +17,12 @@ import (
 
 	"github.com/GeertJohan/go.rice"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+const pLimit = 10
 
 var serverCmd = &cobra.Command{
 	Use:   "server",
@@ -45,8 +48,10 @@ func serverRun(cmd *cobra.Command, args []string) {
 	})
 
 	r.GET("/", homeRoute)
+	r.GET("/post/*key", postRoute)
+	//r.GET("/search/*query", searchRoute)
 	r.GET("/static/*filepath", staticServe)
-	r.GET("/channel/:key", channelRoute)
+	r.GET("/channel/*key", channelRoute)
 	r.Run(":" + port)
 }
 
@@ -100,33 +105,89 @@ func ProperHtml(text string) template.HTML {
 	return template.HTML(html.UnescapeString(template.HTMLEscapeString(text)))
 }
 
-func homeRoute(c *gin.Context) {
+func postRoute(c *gin.Context) {
+
+	key := c.Params.ByName("key")
+
+	if len(key) < 2 {
+		c.String(404, "Invalid Channel")
+	}
+
+	key = key[1:]
+
+	// TODO Need to find posts before and after this... not just the first ones
 	var posts []Itm
-	results := Items().Find(bson.M{}).Sort("-date").Limit(20)
+	results := Items().Find(bson.M{}).Sort("-date").Limit(pLimit)
 	results.All(&posts)
 
-	var channels []Chnl
-	results2 := Channels().Find(bson.M{}).Sort("-lastbuilddate")
-	results2.All(&channels)
+	var post Itm
+	Items().Find(bson.M{"key": key}).Sort("-date").One(&post)
 
-	obj := gin.H{"title": "Go Rules", "posts": posts, "channels": channels}
+	channels := AllChannels()
+
+	obj := gin.H{"title": post.Title, "posts": []Itm{post}, "items": posts, "channels": channels}
+
+	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+		c.HTML(200, "main.html", obj)
+	} else {
+		c.HTML(200, "home.html", obj)
+	}
+}
+
+func Offset(c *gin.Context) int {
+	curPage := cast.ToInt(c.Req.FormValue("page"))
+	return pLimit * curPage
+}
+
+func homeRoute(c *gin.Context) {
+
+	channels := AllChannels()
+
+	var posts []Itm
+	results := Items().Find(bson.M{}).Skip(Offset(c)).Sort("-date").Limit(pLimit)
+	results.All(&posts)
+
+	obj := gin.H{"title": "Go Rules", "items": posts, "posts": posts, "channels": channels}
 	c.HTML(200, "home.html", obj)
 }
 
 func channelRoute(c *gin.Context) {
 	key := c.Params.ByName("key")
 	if len(key) < 2 {
-		c.String(404, "Invalid Channel")
+
+		c.HTML(404, "home.html", gin.H{"message": "Channel Not Found"})
+		return
 	}
 
+	key = key[1:]
+
 	var posts []Itm
-	results := Items().Find(bson.M{"channelkey": key}).Sort("-date").Limit(20)
+	results := Items().Find(bson.M{"channelkey": key}).Skip(Offset(c)).Sort("-date").Limit(pLimit)
 	results.All(&posts)
 
-	var channels []Chnl
-	results2 := Channels().Find(bson.M{}).Sort("-lastbuilddate")
-	results2.All(&channels)
+	if len(posts) == 0 {
+		c.HTML(404, "home.html", gin.H{"message": "No Articles"})
+		return
+	}
 
-	obj := gin.H{"title": "Go Rules", "posts": posts, "channels": channels}
-	c.HTML(200, "home.html", obj)
+	channels := AllChannels()
+
+	var currentChannel Chnl
+	err := Channels().Find(bson.M{"key": key}).One(&currentChannel)
+	if err != nil {
+		if string(err.Error()) == "not found" {
+			c.HTML(404, "home.html", gin.H{"message": "Channel Not Found"})
+			return
+		} else {
+			fmt.Println(err)
+		}
+	}
+
+	obj := gin.H{"title": currentChannel.Title, "header": currentChannel.Title, "posts": posts, "items": posts, "channels": channels}
+
+	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+		c.HTML(200, "channels.html", obj)
+	} else {
+		c.HTML(200, "home.html", obj)
+	}
 }
