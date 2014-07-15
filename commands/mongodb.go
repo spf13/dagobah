@@ -68,15 +68,11 @@ func CreateUniqueIndexes() {
 		Sparse:     true,
 	}
 
-	var err error
-
-	err = Items().EnsureIndex(idx)
-	if err != nil {
+	if err := Items().EnsureIndex(idx); err != nil {
 		fmt.Println(err)
 	}
 
-	err = Channels().EnsureIndex(idx)
-	if err != nil {
+	if err := Channels().EnsureIndex(idx); err != nil {
 		fmt.Println(err)
 	}
 }
