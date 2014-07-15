@@ -66,8 +66,8 @@ func addCommands() {
 
 func Execute() {
 	addCommands()
-	err := RootCmd.Execute()
-	if err != nil {
+
+	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
