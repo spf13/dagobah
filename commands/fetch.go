@@ -118,7 +118,7 @@ func PollFeed(uri string) {
 		}
 
 		fmt.Printf("Sleeping for %d seconds on %s\n", feed.SecondsTillUpdate(), uri)
-		<-time.After(time.Duration(feed.SecondsTillUpdate() * 1e9))
+		time.Sleep(time.Duration(feed.SecondsTillUpdate() * 1e9))
 	}
 }
 
