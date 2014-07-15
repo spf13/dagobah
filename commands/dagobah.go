@@ -33,7 +33,7 @@ func rootRun(cmd *cobra.Command, args []string) {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	viper.SetDefault("feeds", []map[string]string{{"Name": "Hacking Management", "Url": "http://spf13.com/index.xml"}})
+	viper.SetDefault("feeds", []string{"http://spf13.com/index.xml"})
 
 	RootCmd.PersistentFlags().StringVar(&CfgFile, "config", "", "config file (default is $HOME/dagobah/config.yaml)")
 	RootCmd.PersistentFlags().StringP("dbname", "d", "dagobah", "name of the database")

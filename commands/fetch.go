@@ -24,12 +24,8 @@ var fetchCmd = &cobra.Command{
 	Run:   fetchRun,
 }
 
-type ConfigFeed struct {
-	Name, Url string
-}
-
 type Config struct {
-	Feeds []ConfigFeed
+	Feeds []string
 	Port  int
 }
 
@@ -100,7 +96,7 @@ func Fetcher() {
 	}
 
 	for _, feed := range config.Feeds {
-		go PollFeed(feed.Url)
+		go PollFeed(feed)
 	}
 }
 
