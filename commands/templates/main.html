@@ -10,7 +10,7 @@
                 <a name="{{$item.Key}}">
                 <h1 class="ui header">{{$item.Title}}</h1>
                 <section class="meta-tags">
-                    <a class="ui label large blue author">{{$item.Author.Name}}</a>
+                    <a class="ui label large blue author" href="/channel/{{$item.ChannelKey}}">{{$item.Author.Name}}</a>
                     <span class="large ui label date">{{ $item.Date.Format "Jan 2, 2006" }}</span>
                     <!--<span class="ui green small label">Go</span> <span class="ui green small label">Comics</span>-->
                 </section>
