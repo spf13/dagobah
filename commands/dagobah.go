@@ -8,6 +8,7 @@ package commands
 import (
 	"fmt"
 	"os"
+	"os/signal"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -71,5 +72,7 @@ func Execute() {
 		os.Exit(-1)
 	}
 
-	select {}
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt)
+	<-sigChan
 }
