@@ -34,6 +34,7 @@ type Itm struct {
 	Key          string
 	ChannelKey   string
 	Title        string
+	FullContent  string
 	Links        []*rss.Link
 	Description  string
 	Author       rss.Author
@@ -158,6 +159,12 @@ func itmify(o *rss.Item, ch *rss.Channel) Itm {
 	x.Extensions = o.Extensions
 	x.Date, _ = o.ParsedPubDate()
 
+	if o.Content != nil && o.Content.Text != "" {
+		x.FullContent = o.Content.Text
+	} else {
+		x.FullContent = o.Description
+	}
+
 	return x
 }
 
@@ -205,16 +212,8 @@ func (i Itm) FirstLink() (link rss.Link) {
 	return *i.Links[0]
 }
 
-func (i Itm) TrueContent() string {
-	if i.Content != nil && i.Content.Text != "" {
-		return i.Content.Text
-	} else {
-		return i.Description
-	}
-}
-
 func (i Itm) WorthShowing() bool {
-	if len(i.TrueContent()) > 100 {
+	if len(i.FullContent) > 100 {
 		return true
 	}
 	return false

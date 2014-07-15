@@ -2,8 +2,7 @@
 <h1 class="ui header large"> {{.}} </h1>
 {{ end }}
 
-{{ with .posts }}
-    {{ range $item := . }}
+{{ with $item := .post }}
     {{ if $item.WorthShowing }}
         <article>
             <header>
@@ -16,7 +15,7 @@
                 </section>
             </header>
             <section class="main-content">
-                {{$item.TrueContent | html }}
+                {{$item.FullContent | html }}
             </section>
             <footer>
                 {{with $item.FirstLink}}
@@ -25,7 +24,6 @@
             <div class="ui divider"></div>
             </footer>
         </article>
-    {{ end }}
     {{ end }}
 {{ else }}
     No Articles
