@@ -144,7 +144,7 @@ func postRoute(c *gin.Context) {
 
 	channels := AllChannels()
 
-	obj := gin.H{"title": post.Title, "posts": []Itm{post}, "items": posts, "channels": channels}
+	obj := gin.H{"title": post.Title, "post": post, "items": posts, "channels": channels}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "main.html", obj)
@@ -169,12 +169,12 @@ func homeRoute(c *gin.Context) {
 	results := Items().Find(bson.M{}).Skip(Offset(c)).Sort("-date").Limit(pLimit)
 	results.All(&posts)
 
-	obj := gin.H{"title": "Go Rules", "items": posts, "posts": posts, "channels": channels}
 	if len(posts) == 0 {
 		c.HTML(404, "home.html", gin.H{"message": "No Articles"})
 		return
 	}
 
+	obj := gin.H{"title": "Go Rules", "items": posts, "post": posts[0], "channels": channels}
 	c.HTML(200, "home.html", obj)
 }
 
@@ -210,7 +210,7 @@ func channelRoute(c *gin.Context) {
 		}
 	}
 
-	obj := gin.H{"title": currentChannel.Title, "header": currentChannel.Title, "posts": posts, "items": posts, "channels": channels}
+	obj := gin.H{"title": currentChannel.Title, "header": currentChannel.Title, "post": posts[0], "items": posts, "channels": channels}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "channels.html", obj)
