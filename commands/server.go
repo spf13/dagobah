@@ -11,12 +11,14 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"labix.org/v2/mgo/bson"
 
 	"github.com/GeertJohan/go.rice"
 	"github.com/gin-gonic/gin"
+	"github.com/pilu/fresh/runner/runnerutils"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -44,6 +46,11 @@ func Server() {
 	port := viper.GetString("port")
 
 	r := gin.Default()
+
+	if os.Getenv("DEV") != "" {
+		r.Use(RunnerMiddleware())
+	}
+
 	templates := loadTemplates("home.html", "channels.html", "items.html", "main.html")
 	r.HTMLTemplates = templates
 
@@ -69,6 +76,15 @@ func staticServe(c *gin.Context) {
 	fmt.Println(c.Params.ByName("filepath"))
 	http.FileServer(static.HTTPBox()).ServeHTTP(c.Writer, c.Req)
 	c.Req.URL.Path = original
+}
+
+func RunnerMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if runnerutils.HasErrors() {
+			runnerutils.RenderError(c.Writer)
+			c.Abort(500)
+		}
+	}
 }
 
 func loadTemplates(list ...string) *template.Template {
