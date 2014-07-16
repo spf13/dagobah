@@ -167,6 +167,11 @@ func homeRoute(c *gin.Context) {
 	results.All(&posts)
 
 	obj := gin.H{"title": "Go Rules", "items": posts, "posts": posts, "channels": channels}
+	if len(posts) == 0 {
+		c.HTML(404, "home.html", gin.H{"message": "No Articles"})
+		return
+	}
+
 	c.HTML(200, "home.html", obj)
 }
 
