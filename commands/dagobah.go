@@ -71,8 +71,4 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
-
-	sigChan := make(chan os.Signal, 1)
-	signal.Notify(sigChan, os.Interrupt)
-	<-sigChan
 }
