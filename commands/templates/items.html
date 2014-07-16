@@ -1,6 +1,6 @@
                 {{ range $item := .items }}
                 {{ if $item.WorthShowing }}
-                <a class="item" href="/post/{{$item.Key | urlquery }}">
+                <a class="item js-navigate" href="/post/{{$item.Key | urlquery }}">
                     <div class="description">{{ $item.Title }}</div>
                     <div class="right floated ui label small">{{ $item.Date.Format "Jan 2, 2006" }}</div>
                 </a>
