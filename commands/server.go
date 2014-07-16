@@ -154,7 +154,10 @@ func postRoute(c *gin.Context) {
 }
 
 func Offset(c *gin.Context) int {
-	curPage := cast.ToInt(c.Req.FormValue("page"))
+	curPage := cast.ToInt(c.Req.FormValue("p")) - 1
+	if curPage < 1 {
+		return 0
+	}
 	return pLimit * curPage
 }
 
