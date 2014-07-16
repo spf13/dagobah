@@ -87,6 +87,10 @@ func init() {
 
 func fetchRun(cmd *cobra.Command, args []string) {
 	Fetcher()
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt)
+	<-sigChan
 }
 
 func Fetcher() {
