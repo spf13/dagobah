@@ -73,7 +73,6 @@ func staticServe(c *gin.Context) {
 	}
 	original := c.Req.URL.Path
 	c.Req.URL.Path = c.Params.ByName("filepath")
-	fmt.Println(c.Params.ByName("filepath"))
 	http.FileServer(static.HTTPBox()).ServeHTTP(c.Writer, c.Req)
 	c.Req.URL.Path = original
 }
