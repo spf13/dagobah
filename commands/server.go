@@ -37,6 +37,10 @@ func init() {
 }
 
 func serverRun(cmd *cobra.Command, args []string) {
+	Server()
+}
+
+func Server() {
 	port := viper.GetString("port")
 
 	r := gin.Default()

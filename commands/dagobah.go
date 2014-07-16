@@ -26,8 +26,12 @@ and provides it's own webserver.`,
 }
 
 func rootRun(cmd *cobra.Command, args []string) {
-	fmt.Println(viper.Get("feeds"))
-	fmt.Println(viper.GetString("appname"))
+	go Server()
+	go Fetcher()
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt)
+	<-sigChan
 }
 
 func init() {
