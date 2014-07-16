@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	rss "github.com/jteeuwen/go-pkg-rss"
@@ -128,7 +129,9 @@ func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 	for _, ch := range newchannels {
 		chnl := chnlify(ch)
 		if err := Channels().Insert(chnl); err != nil {
-			fmt.Printf("Database error. Err: %v", err)
+			if !strings.Contains(err.Error(), "E11000") {
+				fmt.Printf("Database error. Err: %v", err)
+			}
 		}
 	}
 }
@@ -138,7 +141,9 @@ func itemHandler(feed *rss.Feed, ch *rss.Channel, newitems []*rss.Item) {
 	for _, item := range newitems {
 		itm := itmify(item, ch)
 		if err := Items().Insert(itm); err != nil {
-			fmt.Printf("Database error. Err: %v", err)
+			if !strings.Contains(err.Error(), "E11000") {
+				fmt.Printf("Database error. Err: %v", err)
+			}
 		}
 	}
 }
