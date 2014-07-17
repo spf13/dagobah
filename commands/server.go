@@ -63,6 +63,7 @@ func Server() {
 	//r.GET("/search/*query", searchRoute)
 	r.GET("/static/*filepath", staticServe)
 	r.GET("/channel/*key", channelRoute)
+	fmt.Println("Running on port:", port)
 	r.Run(":" + port)
 }
 
