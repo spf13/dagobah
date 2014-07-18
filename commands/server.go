@@ -130,7 +130,8 @@ func postRoute(c *gin.Context) {
 	key := c.Params.ByName("key")
 
 	if len(key) < 2 {
-		c.String(404, "Invalid Channel")
+		four04(c, "Invalid Channel")
+		return
 	}
 
 	key = key[1:]
@@ -162,6 +163,10 @@ func Offset(c *gin.Context) int {
 	return pLimit * curPage
 }
 
+func four04(c *gin.Context, message string) {
+	c.HTML(404, "home.html", gin.H{"message": message, "title": viper.GetString("title")})
+}
+
 func homeRoute(c *gin.Context) {
 
 	channels := AllChannels()
@@ -171,7 +176,7 @@ func homeRoute(c *gin.Context) {
 	results.All(&posts)
 
 	if len(posts) == 0 {
-		c.HTML(404, "home.html", gin.H{"message": "No Articles"})
+		four04(c, "No Articles")
 		return
 	}
 
@@ -187,8 +192,7 @@ func homeRoute(c *gin.Context) {
 func searchRoute(c *gin.Context) {
 	q := c.Params.ByName("query")
 	if len(q) < 2 {
-
-		c.HTML(404, "home.html", gin.H{"message": "Query is too short. Please try a longer query."})
+		four04(c, "Query is too short. Please try a longer query.")
 		return
 	}
 
@@ -203,7 +207,7 @@ func searchRoute(c *gin.Context) {
 	results.All(&posts)
 
 	if len(posts) == 0 {
-		c.HTML(404, "home.html", gin.H{"message": "No Articles for query '" + q + "'"})
+		four04(c, "No Articles for query '"+q+"'")
 		return
 	}
 
@@ -219,8 +223,7 @@ func searchRoute(c *gin.Context) {
 func channelRoute(c *gin.Context) {
 	key := c.Params.ByName("key")
 	if len(key) < 2 {
-
-		c.HTML(404, "home.html", gin.H{"message": "Channel Not Found"})
+		four04(c, "Channel Not Found")
 		return
 	}
 
@@ -231,7 +234,7 @@ func channelRoute(c *gin.Context) {
 	results.All(&posts)
 
 	if len(posts) == 0 {
-		c.HTML(404, "home.html", gin.H{"message": "No Articles"})
+		four04(c, "No Articles")
 		return
 	}
 
@@ -241,7 +244,7 @@ func channelRoute(c *gin.Context) {
 	err := Channels().Find(bson.M{"key": key}).One(&currentChannel)
 	if err != nil {
 		if string(err.Error()) == "not found" {
-			c.HTML(404, "home.html", gin.H{"message": "Channel Not Found"})
+			four04(c, "Channel not found")
 			return
 		} else {
 			fmt.Println(err)
