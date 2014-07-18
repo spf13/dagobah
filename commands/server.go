@@ -251,7 +251,7 @@ func channelRoute(c *gin.Context) {
 	obj := gin.H{"title": currentChannel.Title, "header": currentChannel.Title, "post": posts[0], "items": posts, "channels": channels}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
-		c.HTML(200, "channels.html", obj)
+		c.HTML(200, "items.html", obj)
 	} else {
 		c.HTML(200, "home.html", obj)
 	}

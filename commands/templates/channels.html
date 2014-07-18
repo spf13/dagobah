@@ -3,7 +3,7 @@
                     <span class="ui name" href=""> All </span>
                 </a>
                 {{ range $channel := .channels }}
-                <div class="item js-navigate-channel" data-href="/channel/{{$channel.Key}}" style="cursor:pointer;">
+                <div class="item js-navigate-channel" data-href="/channel/{{$channel.Key}}" data-key="{{$channel.Key}}" style="cursor:pointer;">
                     <a href="{{$channel.HomePage}}" class="ui float right"><i class="external url sign icon"></i></a>
                     <span class="ui name" href=""> {{$channel.Title}} </span>
                     <span class="ui label">{{ len $channel.Links }}</span>

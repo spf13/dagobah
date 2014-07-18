@@ -15,7 +15,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.4/waypoints.min.js"></script>
 <!--<script src=""></script>-->
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.js"></script>-->
@@ -44,9 +44,7 @@
                 </div>
             </div>
         </section>
-           {{ with .header }}
-               <h4 class="ui inverted black block header" id="header"> {{.}} </h4>
-           {{ end }}
+        <h4 class="ui inverted black block header" {{ with .header }}{{else}}style="display:none;" {{end}} id="header"> {{ with .header }} {{.}} {{ end }}</h4>
             <section id="latest-list" class="ui divided inbox selection list active tab" data-tab="recent">
                 {{ template "items.html" . }}
             </section>

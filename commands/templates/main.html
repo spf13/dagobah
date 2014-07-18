@@ -3,8 +3,7 @@
 {{ end }}
 
 {{ with $item := .post }}
-    {{ if $item.WorthShowing }}
-        <article>
+        <article data-key="{{$item.Key}}">
             <header>
                 <a name="{{$item.Key}}">
                 <h1 class="ui header">{{$item.Title}}</h1>
@@ -24,7 +23,6 @@
             <div class="ui divider"></div>
             </footer>
         </article>
-    {{ end }}
 {{ else }}
     No Articles
 {{ end }}
