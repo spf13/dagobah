@@ -175,7 +175,7 @@ func homeRoute(c *gin.Context) {
 		return
 	}
 
-	obj := gin.H{"title": "Go Rules", "items": posts, "post": posts[0], "channels": channels}
+	obj := gin.H{"title": viper.GetString("title"), "items": posts, "post": posts[0], "channels": channels}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
