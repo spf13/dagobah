@@ -60,7 +60,7 @@ func Server() {
 
 	r.GET("/", homeRoute)
 	r.GET("/post/*key", postRoute)
-	//r.GET("/search/*query", searchRoute)
+	r.GET("/search/*query", searchRoute)
 	r.GET("/static/*filepath", staticServe)
 	r.GET("/channel/*key", channelRoute)
 	fmt.Println("Running on port:", port)
@@ -176,7 +176,44 @@ func homeRoute(c *gin.Context) {
 	}
 
 	obj := gin.H{"title": "Go Rules", "items": posts, "post": posts[0], "channels": channels}
-	c.HTML(200, "home.html", obj)
+
+	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+		c.HTML(200, "items.html", obj)
+	} else {
+		c.HTML(200, "home.html", obj)
+	}
+}
+
+func searchRoute(c *gin.Context) {
+	q := c.Params.ByName("query")
+	if len(q) < 2 {
+
+		c.HTML(404, "home.html", gin.H{"message": "Query is too short. Please try a longer query."})
+		return
+	}
+
+	q = q[1:]
+
+	channels := AllChannels()
+
+	var posts []Itm
+	// TODO need to send a PR to Gustavo with support for textscore sorting
+	results := Items().Find(bson.M{"$text": bson.M{"$search": q}}).Skip(Offset(c)).Limit(pLimit)
+
+	results.All(&posts)
+
+	if len(posts) == 0 {
+		c.HTML(404, "home.html", gin.H{"message": "No Articles for query '" + q + "'"})
+		return
+	}
+
+	obj := gin.H{"title": q, "header": q, "items": posts, "post": posts[0], "channels": channels}
+
+	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+		c.HTML(200, "items.html", obj)
+	} else {
+		c.HTML(200, "home.html", obj)
+	}
 }
 
 func channelRoute(c *gin.Context) {

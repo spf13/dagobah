@@ -75,6 +75,18 @@ func CreateUniqueIndexes() {
 	if err := Channels().EnsureIndex(idx); err != nil {
 		fmt.Println(err)
 	}
+
+	ftidx := mgo.Index{
+		Key:        []string{"$text:fullcontent"},
+		Unique:     false,
+		DropDups:   false,
+		Background: true,
+		Sparse:     true,
+	}
+
+	if err := Items().EnsureIndex(ftidx); err != nil {
+		fmt.Println(err)
+	}
 }
 
 func AllChannels() []Chnl {
