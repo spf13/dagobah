@@ -51,7 +51,7 @@ func Server() {
 		r.Use(RunnerMiddleware())
 	}
 
-	templates := loadTemplates("home.html", "channels.html", "items.html", "main.html")
+	templates := loadTemplates("full.html", "channels.html", "items.html", "main.html")
 	r.HTMLTemplates = templates
 
 	r.GET("/ping", func(c *gin.Context) {
@@ -151,7 +151,7 @@ func postRoute(c *gin.Context) {
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "main.html", obj)
 	} else {
-		c.HTML(200, "home.html", obj)
+		c.HTML(200, "full.html", obj)
 	}
 }
 
@@ -164,7 +164,7 @@ func Offset(c *gin.Context) int {
 }
 
 func four04(c *gin.Context, message string) {
-	c.HTML(404, "home.html", gin.H{"message": message, "title": viper.GetString("title")})
+	c.HTML(404, "full.html", gin.H{"message": message, "title": viper.GetString("title")})
 }
 
 func homeRoute(c *gin.Context) {
@@ -185,7 +185,7 @@ func homeRoute(c *gin.Context) {
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
 	} else {
-		c.HTML(200, "home.html", obj)
+		c.HTML(200, "full.html", obj)
 	}
 }
 
@@ -216,7 +216,7 @@ func searchRoute(c *gin.Context) {
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
 	} else {
-		c.HTML(200, "home.html", obj)
+		c.HTML(200, "full.html", obj)
 	}
 }
 
@@ -256,6 +256,6 @@ func channelRoute(c *gin.Context) {
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
 	} else {
-		c.HTML(200, "home.html", obj)
+		c.HTML(200, "full.html", obj)
 	}
 }
