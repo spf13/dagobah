@@ -41,17 +41,9 @@ func init() {
 	viper.SetDefault("feeds", []string{"http://spf13.com/index.xml"})
 
 	RootCmd.PersistentFlags().StringVar(&CfgFile, "config", "", "config file (default is $HOME/dagobah/config.yaml)")
-	RootCmd.PersistentFlags().StringP("dbname", "d", "dagobah", "name of the database")
-	RootCmd.PersistentFlags().Int("dbport", 27017, "port to access mongoDB")
-	RootCmd.PersistentFlags().String("dbhost", "localhost", "host where mongoDB is")
-	RootCmd.PersistentFlags().String("dbusername", "", "username to connect to mongoDB with")
-	RootCmd.PersistentFlags().String("dbpassword", "", "password to connect to mongoDB with")
 
-	viper.BindPFlag("dbusername", RootCmd.PersistentFlags().Lookup("dbusername"))
-	viper.BindPFlag("dbpassword", RootCmd.PersistentFlags().Lookup("dbpassword"))
-	viper.BindPFlag("dbhost", RootCmd.PersistentFlags().Lookup("dbhost"))
-	viper.BindPFlag("dbport", RootCmd.PersistentFlags().Lookup("dbport"))
-	viper.BindPFlag("dbname", RootCmd.PersistentFlags().Lookup("dbname"))
+	RootCmd.PersistentFlags().String("mongodb_uri", "mongodb://localhost:27017/", "Uri to connect to mongoDB")
+	viper.BindPFlag("mongodb_uri", RootCmd.PersistentFlags().Lookup("mongodb_uri"))
 }
 
 func initConfig() {

@@ -7,6 +7,7 @@ package commands
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/viper"
@@ -21,28 +22,23 @@ func init() {
 }
 
 func DBSession() *mgo.Session {
-	connectString := viper.GetString("dbhost") + ":" + viper.GetString("dbport")
-	var err error
-
 	if mongodbSession == nil {
-		mongodbSession, err = mgo.Dial(connectString)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(-1)
-		}
+		uri := os.Getenv("MONGODB_URI")
+		if uri == "" {
+			uri = viper.GetString("mongodb_uri")
 
-		if !(viper.GetString("dbusername") == "" && viper.GetString("dbpassword") == "") {
-			err = mongodbSession.DB(viper.GetString("dbname")).Login(viper.GetString("dbusername"), viper.GetString("dbpassword"))
-			if err != nil {
-				fmt.Println(err)
-				os.Exit(-1)
+			if uri == "" {
+				log.Fatalln("No connection uri for MongoDB provided")
 			}
 		}
-	}
 
-	if mongodbSession == nil {
-		fmt.Println("unable to connect to MongoDB at", connectString)
-		os.Exit(-1)
+		var err error
+		mongodbSession, err = mgo.Dial(uri)
+		if mongodbSession == nil || err != nil {
+			log.Fatalf("Can't connect to mongo, go error %v\n", err)
+		}
+
+		mongodbSession.SetSafe(&mgo.Safe{})
 	}
 	return mongodbSession
 }
