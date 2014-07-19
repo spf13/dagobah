@@ -48,6 +48,7 @@
             <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
                 {{ template "channels.html" . }}
             </section>
+        <footer>{{ with .footer }}{{else}}Powered by <a href="http://github.com/spf13/dagobah">Dagobah</a>{{ end }}</footer>
     </nav>
     <main>
      {{ template "main.html" . }}
