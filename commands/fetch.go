@@ -17,6 +17,7 @@ import (
 	rss "github.com/jteeuwen/go-pkg-rss"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var fetchCmd = &cobra.Command{
@@ -32,6 +33,7 @@ type Config struct {
 }
 
 type Itm struct {
+	ObjectId     bson.ObjectId `bson:"_id,omitempty"`
 	Date         time.Time
 	Key          string
 	ChannelKey   string
@@ -54,6 +56,7 @@ type Itm struct {
 }
 
 type Chnl struct {
+	ObjectId       bson.ObjectId `bson:"_id,omitempty"`
 	Key            string
 	Title          string
 	Links          []rss.Link

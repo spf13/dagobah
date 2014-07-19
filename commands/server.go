@@ -24,7 +24,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-const pLimit = 10
+const pLimit = 15
 
 var serverCmd = &cobra.Command{
 	Use:   "server",
@@ -130,23 +130,28 @@ func postRoute(c *gin.Context) {
 	key := c.Params.ByName("key")
 
 	if len(key) < 2 {
-		four04(c, "Invalid Channel")
+		four04(c, "Invalid Post")
 		return
 	}
 
 	key = key[1:]
 
-	// TODO Need to find posts before and after this... not just the first ones
-	var posts []Itm
-	results := Items().Find(bson.M{}).Sort("-date").Limit(pLimit)
-	results.All(&posts)
+	var ps []Itm
+	r := Items().Find(bson.M{"key": key}).Sort("-date").Limit(1)
+	r.All(&ps)
 
-	var post Itm
-	Items().Find(bson.M{"key": key}).Sort("-date").One(&post)
+	if len(ps) == 0 {
+		four04(c, "Post not found")
+		return
+	}
+
+	var posts []Itm
+	results := Items().Find(bson.M{"date": bson.M{"$lte": ps[0].Date}}).Sort("-date").Limit(pLimit)
+	results.All(&posts)
 
 	channels := AllChannels()
 
-	obj := gin.H{"title": post.Title, "post": post, "items": posts, "channels": channels}
+	obj := gin.H{"title": ps[0].Title, "posts": posts, "items": posts, "channels": channels, "current": ps[0].Key}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "main.html", obj)
@@ -180,7 +185,7 @@ func homeRoute(c *gin.Context) {
 		return
 	}
 
-	obj := gin.H{"title": viper.GetString("title"), "items": posts, "post": posts[0], "channels": channels}
+	obj := gin.H{"title": viper.GetString("title"), "items": posts, "posts": posts, "channels": channels}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
@@ -211,7 +216,7 @@ func searchRoute(c *gin.Context) {
 		return
 	}
 
-	obj := gin.H{"title": q, "header": q, "items": posts, "post": posts[0], "channels": channels}
+	obj := gin.H{"title": q, "header": q, "items": posts, "posts": posts, "channels": channels}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
@@ -251,7 +256,7 @@ func channelRoute(c *gin.Context) {
 		}
 	}
 
-	obj := gin.H{"title": currentChannel.Title, "header": currentChannel.Title, "post": posts[0], "items": posts, "channels": channels}
+	obj := gin.H{"title": currentChannel.Title, "header": currentChannel.Title, "posts": posts, "items": posts, "channels": channels}
 
 	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)

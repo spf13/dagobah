@@ -2,7 +2,8 @@
 <h1 class="ui header large"> {{.}} </h1>
 {{ end }}
 
-{{ with $item := .post }}
+   {{ range $item := .posts }}
+        {{ if $item.WorthShowing }}
         <article data-key="{{$item.Key}}">
             <header>
                 <a name="{{$item.Key}}">
@@ -23,6 +24,7 @@
             <div class="ui divider"></div>
             </footer>
         </article>
+     {{ end }}
 {{ else }}
     No Articles
 {{ end }}

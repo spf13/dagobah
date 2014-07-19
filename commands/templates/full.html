@@ -14,9 +14,6 @@
 <link rel="stylesheet" type="text/css" href="/static/css/feed.css">
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.4/waypoints.min.js"></script>
 <script src="/static/js/feed.js"></script>
 
 </head>
@@ -42,19 +39,16 @@
             </div>
         </section>
         <h4 class="ui inverted black block header" {{ with .header }}{{else}}style="display:none;" {{end}} id="header"> {{ with .header }} {{.}} {{ end }}</h4>
-            <section id="latest-list" class="ui divided inbox selection list active tab" data-tab="recent">
-                {{ template "items.html" . }}
-            </section>
-            <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
-                {{ template "channels.html" . }}
-            </section>
+        <section id="latest-list" class="ui divided inbox selection list active tab" data-tab="recent">
+            {{ template "items.html" . }}
+        </section>
+        <section id="channel-list" class="ui large inverted vertical menu tab" data-tab="channels">
+            {{ template "channels.html" . }}
+        </section>
         <footer>{{ with .footer }}{{else}}Powered by <a href="http://github.com/spf13/dagobah">Dagobah</a>{{ end }}</footer>
     </nav>
     <main>
      {{ template "main.html" . }}
     </main>
-<script>
-  Dagobah.boot();
-</script>
 </body>
 </html>
