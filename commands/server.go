@@ -52,7 +52,7 @@ func Server() {
 	}
 
 	templates := loadTemplates("full.html", "channels.html", "items.html", "main.html")
-	r.HTMLTemplates = templates
+	r.SetHTMLTemplate(templates)
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
@@ -72,10 +72,10 @@ func staticServe(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	original := c.Req.URL.Path
-	c.Req.URL.Path = c.Params.ByName("filepath")
-	http.FileServer(static.HTTPBox()).ServeHTTP(c.Writer, c.Req)
-	c.Req.URL.Path = original
+	original := c.Request.URL.Path
+	c.Request.URL.Path = c.Params.ByName("filepath")
+	http.FileServer(static.HTTPBox()).ServeHTTP(c.Writer, c.Request)
+	c.Request.URL.Path = original
 }
 
 func RunnerMiddleware() gin.HandlerFunc {
@@ -153,7 +153,7 @@ func postRoute(c *gin.Context) {
 
 	obj := gin.H{"title": ps[0].Title, "posts": posts, "items": posts, "channels": channels, "current": ps[0].Key}
 
-	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+	if strings.ToLower(c.Request.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "main.html", obj)
 	} else {
 		c.HTML(200, "full.html", obj)
@@ -161,7 +161,7 @@ func postRoute(c *gin.Context) {
 }
 
 func Offset(c *gin.Context) int {
-	curPage := cast.ToInt(c.Req.FormValue("p")) - 1
+	curPage := cast.ToInt(c.Request.FormValue("p")) - 1
 	if curPage < 1 {
 		return 0
 	}
@@ -187,7 +187,7 @@ func homeRoute(c *gin.Context) {
 
 	obj := gin.H{"title": viper.GetString("title"), "items": posts, "posts": posts, "channels": channels}
 
-	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+	if strings.ToLower(c.Request.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
 	} else {
 		c.HTML(200, "full.html", obj)
@@ -218,7 +218,7 @@ func searchRoute(c *gin.Context) {
 
 	obj := gin.H{"title": q, "header": q, "items": posts, "posts": posts, "channels": channels}
 
-	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+	if strings.ToLower(c.Request.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
 	} else {
 		c.HTML(200, "full.html", obj)
@@ -258,7 +258,7 @@ func channelRoute(c *gin.Context) {
 
 	obj := gin.H{"title": currentChannel.Title, "header": currentChannel.Title, "posts": posts, "items": posts, "channels": channels}
 
-	if strings.ToLower(c.Req.Header.Get("X-Requested-With")) == "xmlhttprequest" {
+	if strings.ToLower(c.Request.Header.Get("X-Requested-With")) == "xmlhttprequest" {
 		c.HTML(200, "items.html", obj)
 	} else {
 		c.HTML(200, "full.html", obj)
