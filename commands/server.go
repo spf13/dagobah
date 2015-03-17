@@ -82,7 +82,7 @@ func RunnerMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if runnerutils.HasErrors() {
 			runnerutils.RenderError(c.Writer)
-			c.Abort(500)
+			c.Abort()
 		}
 	}
 }
