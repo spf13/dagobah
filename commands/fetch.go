@@ -56,7 +56,7 @@ type Itm struct {
 }
 
 type Chnl struct {
-	ObjectId       bson.ObjectId `bson:"_id,omitempty"`
+	ObjectId       string `bson:"_id,omitempty"`
 	Key            string
 	Title          string
 	Links          []rss.Link
@@ -131,7 +131,7 @@ func PollFeed(uri string) {
 func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 	fmt.Printf("%d new channel(s) in %s\n", len(newchannels), feed.Url)
 	for _, ch := range newchannels {
-		chnl := chnlify(ch)
+		chnl := chnlify(feed.Url, ch)
 		if err := Channels().Insert(chnl); err != nil {
 			if !strings.Contains(err.Error(), "E11000") {
 				fmt.Printf("Database error. Err: %v", err)
@@ -181,8 +181,9 @@ func itmify(o *rss.Item, ch *rss.Channel) Itm {
 	return x
 }
 
-func chnlify(o *rss.Channel) Chnl {
+func chnlify(url string, o *rss.Channel) Chnl {
 	var x Chnl
+	x.ObjectId = url
 	x.Key = o.Key()
 	x.Title = o.Title
 	x.Links = o.Links
