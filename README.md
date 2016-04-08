@@ -37,7 +37,7 @@ Dagobah will run a high performance web server and fetch and update the feeds in
 Dagobah depends on [go.rice](https://github.com/GeertJohan/go.rice) to embed the static files and templates
 into the binary.
 
-    go get github.com/spf13/dagobah.git
+    go get github.com/spf13/dagobah
     cd $GOPATH/src/github.com/spf13/dagobah/commands
     rice embed-go
     cd ..
