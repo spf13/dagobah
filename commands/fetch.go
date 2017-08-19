@@ -101,7 +101,7 @@ func fetchRun(cmd *cobra.Command, args []string) {
 func Fetcher() {
 	var config Config
 
-	if err := viper.Marshal(&config); err != nil {
+	if err := viper.Unmarshal(&config); err != nil {
 		fmt.Println(err)
 	}
 
